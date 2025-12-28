@@ -5,21 +5,19 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_pallete.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   @override
   void dispose() {
-    _nameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
@@ -40,14 +38,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   spacing: 10,
                   children: [
                     Text(
-                      'Sign up',
+                      'Sign in',
                       style: Theme.of(context).textTheme.displaySmall?.copyWith(
                         color: AppPallete.whiteColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     context.vSpace(5),
-                    AuthField(hintText: 'Name', controller: _nameController),
                     AuthField(hintText: 'Email', controller: _emailController),
                     AuthField(
                       hintText: 'Password',
@@ -55,11 +52,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       isObscure: true,
                     ),
                     context.vSpace(5),
-                    AuthButton(onTap: () {}, title: 'Sign up'),
+                    AuthButton(onTap: () {}, title: 'Sign in'),
                     context.vSpace(5),
                     RichText(
                       text: TextSpan(
-                        text: 'Already have an account? ',
+                        text: 'Don\'t have an account? ',
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                           color: AppPallete.whiteColor,
                           fontWeight: FontWeight.normal,
