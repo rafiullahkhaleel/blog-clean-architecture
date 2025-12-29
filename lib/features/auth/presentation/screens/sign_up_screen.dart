@@ -1,6 +1,8 @@
 import 'package:blog_clean_architecture/core/extension/context_size_box_extension.dart';
+import 'package:blog_clean_architecture/features/auth/presentation/screens/login_screen.dart';
 import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_button.dart';
 import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_pallete.dart';
@@ -72,6 +74,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: AppPallete.gradient1,
                                   fontWeight: FontWeight.bold,
                                 ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  ),
+                                );
+                              },
                           ),
                         ],
                       ),

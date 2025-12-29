@@ -1,5 +1,5 @@
 import 'package:blog_clean_architecture/core/theme/app_theme.dart';
-import 'package:blog_clean_architecture/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:blog_clean_architecture/features/auth/presentation/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Blog App',
       theme: AppTheme.darkMode,
-      home: const SignUpScreen(),
+      home: const LoginScreen(),
     );
   }
 }
