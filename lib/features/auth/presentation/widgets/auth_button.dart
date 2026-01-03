@@ -4,14 +4,20 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_pallete.dart';
 
 class AuthButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String title;
-  const AuthButton({super.key, required this.onTap, required this.title});
+  final bool isLoading;
+  const AuthButton({
+    super.key,
+    this.onTap,
+    required this.title,
+    this.isLoading = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap,
       child: Container(
         width: double.infinity,
         height: context.height(7),
@@ -28,12 +34,14 @@ class AuthButton extends StatelessWidget {
           borderRadius: .circular(12),
         ),
         child: Center(
-          child: Text(
-            title,
-            style: Theme.of(
-              context,
-            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
-          ),
+          child: isLoading
+              ? CircularProgressIndicator(color: AppPallete.whiteColor)
+              : Text(
+                  title,
+                  style: Theme.of(
+                    context,
+                  ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w500),
+                ),
         ),
       ),
     );

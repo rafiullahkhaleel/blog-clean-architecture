@@ -10,9 +10,9 @@ abstract interface class AuthRemoteDatasource {
   Future<String> login({required String email, required String password});
 }
 
-class AuthRepositoryImpl implements AuthRemoteDatasource {
+class AuthRemoteDatasourceImpl implements AuthRemoteDatasource {
   final SupabaseClient _supabase;
-  AuthRepositoryImpl(this._supabase);
+  AuthRemoteDatasourceImpl(this._supabase);
   @override
   Future<String> login({required String email, required String password}) {
     // TODO: implement login

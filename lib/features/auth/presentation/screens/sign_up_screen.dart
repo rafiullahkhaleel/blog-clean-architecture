@@ -4,17 +4,19 @@ import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_
 import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_field.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_pallete.dart';
+import '../provider/sign_up_provider.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -29,6 +31,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(signUpProvider, (previous, next) {
+      if (next.error != null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(next.error!)));
+      }
+    });
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -57,7 +66,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       isObscure: true,
                     ),
                     context.vSpace(5),
-                    AuthButton(onTap: () {}, title: 'Sign up'),
+                    Consumer(
+                      builder: (context, ref, child) {
+                        final state = ref.watch(signUpProvider);
+                        final stateNotifier = ref.read(signUpProvider.notifier);
+                        return AuthButton(
+                          isLoading: state.isLoading,
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              stateNotifier.signUp(
+                                name: _nameController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,
+                              );
+                            }
+                          },
+                          title: 'Sign up',
+                        );
+                      },
+                    ),
                     context.vSpace(5),
                     RichText(
                       text: TextSpan(
