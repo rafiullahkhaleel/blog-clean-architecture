@@ -1,18 +1,12 @@
-import 'package:blog_clean_architecture/features/auth/data/repository/auth_repository_impl.dart';
 import 'package:blog_clean_architecture/features/auth/domain/usecase/sign_up_usecase.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import '../../data/datasource/auth_remote_datasource.dart';
+import '../../../../core/di/service_locator.dart';
 import '../state/sign_up_state.dart';
 
 final signUpProvider = StateNotifierProvider<SignUpNotifier, SignUpState>((
   red,
 ) {
-  final signUpUseCase = SignUpUseCase(
-    AuthRepositoryImpl(AuthRemoteDatasourceImpl(Supabase.instance.client)),
-  );
-  return SignUpNotifier(signUpUseCase);
+  return SignUpNotifier(sl<SignUpUseCase>());
 });
 
 class SignUpNotifier extends StateNotifier<SignUpState> {
