@@ -2,10 +2,9 @@ import 'package:blog_clean_architecture/core/extension/context_size_box_extensio
 import 'package:blog_clean_architecture/features/auth/presentation/screens/login_screen.dart';
 import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_button.dart';
 import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_field.dart';
-import 'package:flutter/gestures.dart';
+import 'package:blog_clean_architecture/features/auth/presentation/widgets/auth_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../core/theme/app_pallete.dart';
 import '../provider/sign_up_provider.dart';
 
@@ -31,7 +30,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen(signUpProvider, (previous, next) {
+    ref.listen(authProvider, (previous, next) {
       if (next.error != null) {
         ScaffoldMessenger.of(
           context,
@@ -68,8 +67,8 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                     context.vSpace(5),
                     Consumer(
                       builder: (context, ref, child) {
-                        final state = ref.watch(signUpProvider);
-                        final stateNotifier = ref.read(signUpProvider.notifier);
+                        final state = ref.watch(authProvider);
+                        final stateNotifier = ref.read(authProvider.notifier);
                         return AuthButton(
                           isLoading: state.isLoading,
                           onTap: () {
@@ -86,32 +85,16 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       },
                     ),
                     context.vSpace(5),
-                    RichText(
-                      text: TextSpan(
-                        text: 'Already have an account? ',
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          color: AppPallete.whiteColor,
-                          fontWeight: FontWeight.normal,
-                        ),
-                        children: [
-                          TextSpan(
-                            text: 'Sign in',
-                            style: Theme.of(context).textTheme.titleMedium
-                                ?.copyWith(
-                                  color: AppPallete.gradient1,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginScreen(),
-                                  ),
-                                );
-                              },
+                    AuthText(
+                      text: 'Already have an account? ',
+                      buttonText: 'Log in',
+                      onTap: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     ),
                   ],
                 ),
